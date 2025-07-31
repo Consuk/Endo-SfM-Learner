@@ -1,0 +1,18 @@
+=> will save everything to checkpoints\prueba\07-06-18-33
+=> fetching scenes in 'C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\data\endovis_data'
+28839 samples found in 9 train scenes
+2753 samples found in 1 valid scenes
+=> creating model
+C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torchvision\models\_utils.py:135: UserWarning: Using 'weights' as positional parameter(s) is deprecated since 0.13 and may be removed in the future. Please use keyword parameter(s) instead.
+  warnings.warn(
+C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torchvision\models\_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+=> setting adam solver
+Traceback (most recent call last):
+  File "train.py", line 516, in <module>
+    main()
+  File "train.py", line 227, in main
+    logger = TermLogger(n_epochs=args.epochs, train_size=min(len(train_loader), args.epoch_size), valid_size=len(val_loader))
+  File "C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\logger.py", line 12, in __init__
+    self.epoch_bar = progressbar.ProgressBar(max_value=n_epochs)
+TypeError: __init__() got an unexpected keyword argument 'max_value'

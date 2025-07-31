@@ -1,0 +1,7 @@
+=> will save everything to checkpoints\prueba\07-06-18-22
+Traceback (most recent call last):
+  File "train.py", line 513, in <module>
+    main()
+  File "train.py", line 87, in main
+    args.save_path.makedirs_p()
+AttributeError: 'WindowsPath' object has no attribute 'makedirs_p'

@@ -1,0 +1,7 @@
+usage: train.py [-h] [--folder-type {sequence,pair}] [--sequence-length N] [-j N] [--epochs N] [--epoch-size N] [-b N] [--lr LR]
+                [--momentum M] [--beta M] [--weight-decay W] [--print-freq N] [--seed SEED] [--log-summary PATH] [--log-full PATH]
+                [--log-output] [--resnet-layers {18,50}] [--num-scales W] [-p W] [-s W] [-c W] [--with-ssim WITH_SSIM]
+                [--with-mask WITH_MASK] [--with-auto-mask WITH_AUTO_MASK] [--with-pretrain WITH_PRETRAIN] [--dataset {kitti,nyu}]
+                [--pretrained-disp PATH] [--pretrained-pose PATH] --name NAME [--padding-mode {zeros,border}] [--with-gt]
+                DIR
+train.py: error: the following arguments are required: DIR, --name

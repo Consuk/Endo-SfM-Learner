@@ -1,0 +1,16 @@
+=> will save everything to checkpoints\prueba\07-06-18-28
+=> fetching scenes in 'C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\data\endovis_data'
+Traceback (most recent call last):
+  File "train.py", line 514, in <module>
+    main()
+  File "train.py", line 160, in main
+    val_set = PairFolder(
+  File "C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\datasets\pair_folders.py", line 30, in __init__
+    self.crawl_folders()
+  File "C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\datasets\pair_folders.py", line 37, in crawl_folders
+    imgs = sorted(scene.files('*.jpg'))
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\path\__init__.py", line 542, in files
+    return [p for p in self.iterdir(*args, **kwargs) if p.is_file()]
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\path\__init__.py", line 520, in iterdir
+    return filter(match, (self / child for child in os.listdir(self)))
+FileNotFoundError: [WinError 3] El sistema no puede encontrar la ruta especificada: Path('C:\\Users\\Trabajo\\Desktop\\Endo-SfM-Learner-master\\EndoSfMLearner\\data\\endovis_data\\dataset')

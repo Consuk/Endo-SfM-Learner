@@ -1,0 +1,21 @@
+=> will save everything to checkpoints\prueba\07-06-18-30
+=> fetching scenes in 'C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\data\endovis_data'
+28839 samples found in 9 train scenes
+2753 samples found in 1 valid scenes
+=> creating model
+C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torchvision\models\_utils.py:135: UserWarning: Using 'weights' as positional parameter(s) is deprecated since 0.13 and may be removed in the future. Please use keyword parameter(s) instead.
+  warnings.warn(
+C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torchvision\models\_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Traceback (most recent call last):
+  File "train.py", line 516, in <module>
+    main()
+  File "train.py", line 194, in main
+    pose_net = models.PoseResNet(18, args.with_pretrain).to(device)
+  File "C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\models\PoseResNet.py", line 58, in __init__
+    self.encoder = ResnetEncoder(num_layers = num_layers, pretrained = pretrained, num_input_images=2)
+  File "C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\models\resnet_encoder.py", line 111, in __init__
+    self.encoder = resnet_multiimage_input(num_layers, pretrained, num_input_images)
+  File "C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\models\resnet_encoder.py", line 55, in resnet_multiimage_input
+    loaded = model_zoo.load_url(models.resnet.model_urls['resnet{}'.format(num_layers)])
+AttributeError: module 'torchvision.models.resnet' has no attribute 'model_urls'

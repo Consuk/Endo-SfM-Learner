@@ -1,0 +1,48 @@
+=> will save everything to checkpoints\prueba\07-06-18-34
+=> fetching scenes in 'C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner\data\endovis_data'
+28839 samples found in 9 train scenes
+2753 samples found in 1 valid scenes
+=> creating model
+C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torchvision\models\_utils.py:135: UserWarning: Using 'weights' as positional parameter(s) is deprecated since 0.13 and may be removed in the future. Please use keyword parameter(s) instead.
+  warnings.warn(
+C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torchvision\models\_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+=> setting adam solver
+
+
+
+
+
+Train:
+
+Validation:
+[38;2;255;2;0m  0%[39m [38;2;255;2;0m(29 of 7210)[39m |                                                                           | Elapsed Time: 0:01:34 ETA:   6:28:26Traceback (most recent call last):
+
+Train:
+  File "train.py", line 516, in <module>
+    main()
+  File "train.py", line 236, in main
+    train_loss = train(args, train_loader, disp_net, pose_net, optimizer, args.epoch_size, logger)
+  File "train.py", line 337, in train
+    loss.backward()
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torch\_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torch\autograd\__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\torch\autograd\graph.py", line 769, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\wandb\sdk\lib\service\service_connection.py", line 54, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\wandb\sdk\lib\service\service_connection.py", line 182, in teardown
+    self._router.join()
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\wandb\sdk\interface\router.py", line 75, in join
+    self._thread.join()
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\threading.py", line 1011, in join
+    self._wait_for_tstate_lock()
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\threading.py", line 1027, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
+[0m

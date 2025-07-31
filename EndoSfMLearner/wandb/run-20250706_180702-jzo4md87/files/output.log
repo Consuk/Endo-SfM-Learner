@@ -1,0 +1,13 @@
+=> will save everything to checkpoints\prueba\07-06-18:07
+Traceback (most recent call last):
+  File "train.py", line 512, in <module>
+    main()
+  File "train.py", line 86, in main
+    args.save_path.makedirs_p()
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\path\__init__.py", line 1260, in makedirs_p
+    self.makedirs(mode)
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\site-packages\path\__init__.py", line 1253, in makedirs
+    os.makedirs(self, mode)
+  File "C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\lib\os.py", line 223, in makedirs
+    mkdir(name, mode)
+NotADirectoryError: [WinError 267] El nombre del directorio no es válido: Path('checkpoints\\prueba\\07-06-18:07')

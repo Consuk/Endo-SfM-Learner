@@ -1,0 +1,37 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            6nv5xki94d2r6zc9y1f519h3432etqlv:
+                args:
+                    - C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\data\endovis_data
+                    - --name
+                    - prueba
+                codePath: train.py
+                codePathLocal: train.py
+                email: 0228053@up.edu.mx
+                executable: C:\Users\Trabajo\.conda\envs\endo_sfmlearner_env\python.exe
+                host: Consuk
+                os: Windows-10-10.0.26100-SP0
+                program: train.py
+                python: CPython 3.8.20
+                root: C:\Users\Trabajo\Desktop\Endo-SfM-Learner-master\EndoSfMLearner
+                startedAt: "2025-07-07T00:09:14.590983Z"
+                writerId: 6nv5xki94d2r6zc9y1f519h3432etqlv
+        m: []
+        python_version: 3.8.20
+        t:
+            "1":
+                - 1
+                - 41
+                - 51
+            "2":
+                - 1
+                - 41
+                - 51
+            "4": 3.8.20
+            "5": 0.21.0
+            "8":
+                - 3
+            "12": 0.21.0
+            "13": windows-amd64

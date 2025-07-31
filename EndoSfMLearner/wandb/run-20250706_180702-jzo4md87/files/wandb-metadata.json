@@ -1,0 +1,18 @@
+{
+  "os": "Windows-10-10.0.26100-SP0",
+  "python": "CPython 3.8.20",
+  "startedAt": "2025-07-07T00:07:02.654175Z",
+  "args": [
+    "C:\\Users\\Trabajo\\Desktop\\Endo-SfM-Learner-master\\data\\endovis_data",
+    "--name",
+    "prueba"
+  ],
+  "program": "train.py",
+  "codePath": "train.py",
+  "codePathLocal": "train.py",
+  "email": "0228053@up.edu.mx",
+  "root": "C:\\Users\\Trabajo\\Desktop\\Endo-SfM-Learner-master\\EndoSfMLearner",
+  "host": "Consuk",
+  "executable": "C:\\Users\\Trabajo\\.conda\\envs\\endo_sfmlearner_env\\python.exe",
+  "writerId": "u7sqv7fc9aun1twf00qenguw9q3fi2ck"
+}
