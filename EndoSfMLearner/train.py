@@ -302,7 +302,8 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
         # measure data loading time
         data_time.update(time.time() - end)
         tgt_img = tgt_img.to(device)
-        ref_imgs = [img.to(device) for img in ref_imgs]
+        # ref_imgs = [img.to(device) for img in ref_imgs]
+        ref_imgs = [img.to(device) if img.dim() == 4 else img.unsqueeze(0).expand_as(tgt_img).to(device) for img in ref_imgs]
         intrinsics = intrinsics.to(device)
         # compute output
         tgt_depth, ref_depths = compute_depth(disp_net, tgt_img, ref_imgs)
@@ -375,7 +376,8 @@ def validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger):
     logger.valid_bar.update(0)
     for i, (tgt_img, ref_imgs, intrinsics, intrinsics_inv) in enumerate(val_loader):
         tgt_img = tgt_img.to(device)
-        ref_imgs = [img.to(device) for img in ref_imgs]
+        # ref_imgs = [img.to(device) for img in ref_imgs]
+        ref_imgs = [img.to(device) if img.dim() == 4 else img.unsqueeze(0).expand_as(tgt_img).to(device) for img in ref_imgs]
         intrinsics = intrinsics.to(device)
         intrinsics_inv = intrinsics_inv.to(device)
 
