@@ -104,41 +104,78 @@ class MonoDataset(data.Dataset):
                     inputs[(n + "_aug", im, i)] = self.to_tensor(color_aug(f))
 
     def __len__(self):
+        if hasattr(self, "folder_type") and self.folder_type == "sequence" and hasattr(self, "train_entries"):
+            return len(self.train_entries)
         return len(self.filenames)
+
 
     def load_intrinsics(self, folder, frame_index):
         return self.K.copy()
 
-    def __getitem__(self, index):
-        """Returns a single training item from the dataset as a dictionary.
+    # def __getitem__(self, index):
+    #     """Returns a single training item from the dataset as a dictionary.
 
-        Values correspond to torch tensors.
-        Keys in the dictionary are either strings or tuples:
+    #     Values correspond to torch tensors.
+    #     Keys in the dictionary are either strings or tuples:
 
-            ("color", <frame_id>, <scale>)          for raw colour images,
-            ("color_aug", <frame_id>, <scale>)      for augmented colour images,
-            ("K", scale) or ("inv_K", scale)        for camera intrinsics,
-            "depth_gt"                              for ground truth depth maps
+    #         ("color", <frame_id>, <scale>)          for raw colour images,
+    #         ("color_aug", <frame_id>, <scale>)      for augmented colour images,
+    #         ("K", scale) or ("inv_K", scale)        for camera intrinsics,
+    #         "depth_gt"                              for ground truth depth maps
 
-        <frame_id> is:
-            an integer (e.g. 0, -1, or 1) representing the temporal step relative to 'index',
+    #     <frame_id> is:
+    #         an integer (e.g. 0, -1, or 1) representing the temporal step relative to 'index',
 
-        <scale> is an integer representing the scale of the image relative to the fullsize image:
-            -1      images at native resolution as loaded from disk
-            0       images resized to (self.width,      self.height     )
-            1       images resized to (self.width // 2, self.height // 2)
-            2       images resized to (self.width // 4, self.height // 4)
-            3       images resized to (self.width // 8, self.height // 8)
-        """
+    #     <scale> is an integer representing the scale of the image relative to the fullsize image:
+    #         -1      images at native resolution as loaded from disk
+    #         0       images resized to (self.width,      self.height     )
+    #         1       images resized to (self.width // 2, self.height // 2)
+    #         2       images resized to (self.width // 4, self.height // 4)
+    #         3       images resized to (self.width // 8, self.height // 8)
+    #     """
 
         
+    #     inputs = {}
+
+    #     do_color_aug = self.is_train and random.random() > 0.5
+    #     do_flip = self.is_train and random.random() > 0.5
+    #     #do_flip = False
+    #     #do_color_aug = False
+    #     folder, frame_index, side = self.index_to_folder_and_frame_idx(index)
+
+    #     poses = {}
+    #     for i in self.frame_idxs:
+    #         if i == "s":
+    #             other_side = {"r": "l", "l": "r"}[side]
+    #             inputs[("color", i, -1)] = self.get_color(folder, frame_index, other_side, do_flip)
+    #         else:
+    #             inputs[("color", i, -1)] = self.get_color(folder, frame_index + i, side, do_flip)
+    
+    #     if do_color_aug:
+    #         color_aug = transforms.ColorJitter(self.brightness, self.contrast, self.saturation, self.hue)
+    #     else:
+    #         color_aug = (lambda x: x)
+
+    #     self.preprocess(inputs, color_aug)
+
+    #     intrinsics = self.load_intrinsics(folder, frame_index)
+        
+    #     tgt_img = inputs[("color_aug", 0, -1)]
+    #     ref_imgs = inputs[("color_aug", 1, -1)]
+    #     #intrinsics = self.to_tensor(intrinsics
+        
+    #     return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
+    def __getitem__(self, index):
         inputs = {}
 
         do_color_aug = self.is_train and random.random() > 0.5
         do_flip = self.is_train and random.random() > 0.5
-        #do_flip = False
-        #do_color_aug = False
-        folder, frame_index, side = self.index_to_folder_and_frame_idx(index)
+
+        # Usa train_entries si estamos en modo sequence
+        if hasattr(self, "folder_type") and self.folder_type == "sequence" and hasattr(self, "train_entries"):
+            folder, frame_index, side = self.train_entries[index]
+        else:
+            folder, frame_index, side = self.index_to_folder_and_frame_idx(index)
 
         poses = {}
         for i in self.frame_idxs:
@@ -147,7 +184,7 @@ class MonoDataset(data.Dataset):
                 inputs[("color", i, -1)] = self.get_color(folder, frame_index, other_side, do_flip)
             else:
                 inputs[("color", i, -1)] = self.get_color(folder, frame_index + i, side, do_flip)
-    
+
         if do_color_aug:
             color_aug = transforms.ColorJitter(self.brightness, self.contrast, self.saturation, self.hue)
         else:
@@ -156,12 +193,12 @@ class MonoDataset(data.Dataset):
         self.preprocess(inputs, color_aug)
 
         intrinsics = self.load_intrinsics(folder, frame_index)
-        
+
         tgt_img = inputs[("color_aug", 0, -1)]
         ref_imgs = inputs[("color_aug", 1, -1)]
-        #intrinsics = self.to_tensor(intrinsics
-        
+
         return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
+
 
     def get_color(self, folder, frame_index, side, do_flip):
         raise NotImplementedError
@@ -171,4 +208,21 @@ class MonoDataset(data.Dataset):
 
     def get_depth(self, folder, frame_index, side, do_flip):
         raise NotImplementedError
+    
+    def index_to_folder_and_frame_idx(self, index):
+        line = self.filenames[index].split()
+        folder = line[0]
+
+        if len(line) == 3:
+            frame_index = int(line[1])
+        else:
+            frame_index = 1
+
+        if len(line) == 3:
+            side = line[2]
+        else:
+            side = None
+
+        return folder, frame_index, side
+
 
