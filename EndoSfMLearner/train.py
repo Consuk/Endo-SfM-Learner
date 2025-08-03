@@ -495,23 +495,26 @@ def compute_depth(disp_net, tgt_img, ref_imgs):
 
     ref_depths = []
     for ref_img in ref_imgs:
+        if ref_img.dim() == 3:
+            ref_img = ref_img.unsqueeze(0)  # Añade batch si no tiene
         ref_depth = [1/disp for disp in disp_net(ref_img)]
         ref_depths.append(ref_depth)
 
     return tgt_depth, ref_depths
 
 
+
 def compute_pose_with_inv(pose_net, tgt_img, ref_imgs):
     poses = []
     poses_inv = []
     for ref_img in ref_imgs:
-        #print(tgt_img.shape,ref_img.shape)
-        #ref_img = torch.unsqueeze(ref_img, 0)
-        #print(tgt_img.shape,ref_img.shape)
+        if ref_img.dim() == 3:
+            ref_img = ref_img.unsqueeze(0)
         poses.append(pose_net(tgt_img, ref_img))
         poses_inv.append(pose_net(ref_img, tgt_img))
 
     return poses, poses_inv
+
 
 def readlines(filename):
     """Read all the lines in a text file and return as a list
