@@ -167,9 +167,12 @@ def main():
                 dataset=args.dataset
             )
     
-    print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
-    print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))
-    
+    # print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
+    # print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))
+    print('{} samples found in {} train folders'.format(len(train_set), len(set([f.split("/")[0] for f in train_set.filenames]))))
+    print('{} samples found in {} valid folders'.format(len(val_set), len(set([f.split("/")[0] for f in val_set.filenames]))))
+
+
     
     train_loader = torch.utils.data.DataLoader(
         train_set, batch_size=args.batch_size, shuffle=False,
