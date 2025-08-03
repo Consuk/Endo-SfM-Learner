@@ -243,7 +243,7 @@ def main():
         else:"""
         errors, error_names = validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger)
         error_string = ', '.join('{} : {:.3f}'.format(name, error) for name, error in zip(error_names, errors))
-        logger.valid_writer.write(' * Avg {}'.format(error_string))
+        print(' * Avg {}'.format(error_string))
 
         
         for error, name in zip(errors, error_names):
@@ -415,7 +415,10 @@ def validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger):
         end = time.time()
         logger.valid_bar.update(i+1)
         if i % args.print_freq == 0:
-            logger.valid_writer.write('valid: Time {} Loss {}'.format(batch_time, losses))
+            # logger.valid_writer.write('valid: Time {} Loss {}'.format(batch_time, losses))
+            print('valid: Time {} Loss {}'.format(batch_time, losses))
+
+            
 
     logger.valid_bar.update(len(val_loader))
     return losses.avg, ['Total loss', 'Photo loss', 'Smooth loss', 'Consistency loss']
@@ -477,7 +480,8 @@ def validate_with_gt(args, val_loader, disp_net, epoch, logger, output_writers=[
         end = time.time()
         logger.valid_bar.update(i+1)
         if i % args.print_freq == 0:
-            logger.valid_writer.write('valid: Time {} Abs Error {:.4f} ({:.4f})'.format(batch_time, errors.val[0], errors.avg[0]))
+            # logger.valid_writer.write('valid: Time {} Abs Error {:.4f} ({:.4f})'.format(batch_time, errors.val[0], errors.avg[0]))
+            print('valid: Time {} Abs Error {:.4f} ({:.4f})'.format(batch_time, errors.val[0], errors.avg[0]))
     logger.valid_bar.update(len(val_loader))
     return errors.avg, error_names
 
