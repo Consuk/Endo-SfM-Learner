@@ -1,1 +1,4 @@
-ENDOVIS_endo/validation_dataset
+dataset9/keyframe1/data/
+dataset9/keyframe2/data/
+dataset9/keyframe3/data/
+dataset9/keyframe4/data/
