@@ -95,29 +95,29 @@ class SCAREDRAWDataset(SCAREDDataset):
 
         return depth_gt
 
-        def collect_train_entries(self):
-            train_entries = []
+    def collect_train_entries(self):
+        train_entries = []
 
-            print(f"[INFO] Using folder_type='sequence', collecting samples from: {self.filenames[0].split()[0]} ...")
+        print(f"[INFO] Using folder_type='sequence', collecting samples from: {self.filenames[0].split()[0]} ...")
 
-            for entry in self.filenames:
-                folder = entry.split()[0]
-                data_path = os.path.join(self.data_path, folder, "data")
+        for entry in self.filenames:
+            folder = entry.split()[0]
+            data_path = os.path.join(self.data_path, folder, "data")
 
-                if not os.path.exists(data_path):
-                    print(f"[WARNING] No data folder found at {data_path}")
-                    continue
+            if not os.path.exists(data_path):
+                print(f"[WARNING] No data folder found at {data_path}")
+                continue
 
-                # Obtener y ordenar las imágenes disponibles
-                images = sorted([f for f in os.listdir(data_path) if f.endswith(self.img_ext)])
-                num_imgs = len(images)
+            # Obtener y ordenar las imágenes disponibles
+            images = sorted([f for f in os.listdir(data_path) if f.endswith(self.img_ext)])
+            num_imgs = len(images)
 
-                for i in range(1, num_imgs - 1):  # frame_idx = i; puede acceder a i-1 y i+1
-                    train_entries.append((folder, i, 'l'))
+            for i in range(1, num_imgs - 1):  # frame_idx = i; puede acceder a i-1 y i+1
+                train_entries.append((folder, i, 'l'))
 
-                print(f"[INFO] {folder}: {num_imgs} images -> {len(images)-2} sequence samples")
+            print(f"[INFO] {folder}: {num_imgs} images -> {len(images)-2} sequence samples")
 
-            print(f"[INFO] Total sequence samples collected: {len(train_entries)}")
-            return train_entries
+        print(f"[INFO] Total sequence samples collected: {len(train_entries)}")
+        return train_entries
 
 
