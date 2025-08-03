@@ -29,7 +29,3 @@ dataset8/keyframe1/data/
 dataset8/keyframe2/data/
 dataset8/keyframe3/data/
 dataset8/keyframe4/data/
-dataset9/keyframe1/data/
-dataset9/keyframe2/data/
-dataset9/keyframe3/data/
-dataset9/keyframe4/data/
