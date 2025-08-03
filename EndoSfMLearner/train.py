@@ -507,13 +507,19 @@ def compute_depth(disp_net, tgt_img, ref_imgs):
 def compute_pose_with_inv(pose_net, tgt_img, ref_imgs):
     poses = []
     poses_inv = []
+
     for ref_img in ref_imgs:
+        # Asegura que ref_img tenga mismo batch size que tgt_img
         if ref_img.dim() == 3:
-            ref_img = ref_img.unsqueeze(0)
+            ref_img = ref_img.unsqueeze(0).expand_as(tgt_img)
+        elif ref_img.shape[0] != tgt_img.shape[0]:
+            ref_img = ref_img.expand_as(tgt_img)
+
         poses.append(pose_net(tgt_img, ref_img))
         poses_inv.append(pose_net(ref_img, tgt_img))
 
     return poses, poses_inv
+
 
 
 def readlines(filename):
