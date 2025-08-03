@@ -57,7 +57,8 @@ parser.add_argument('--with-ssim', type=int, default=1, help='with ssim or not')
 parser.add_argument('--with-mask', type=int, default=1, help='with the the mask for moving objects and occlusions or not')
 parser.add_argument('--with-auto-mask', type=int,  default=0, help='with the the mask for stationary points')
 parser.add_argument('--with-pretrain', type=int,  default=1, help='with or without imagenet pretrain for resnet')
-parser.add_argument('--dataset', type=str, choices=['kitti', 'nyu'], default='kitti', help='the dataset to train')
+parser.add_argument('--dataset', type=str, choices=['kitti', 'nyu', 'scared'], 
+                    default='kitti', help='the dataset to train')
 parser.add_argument('--pretrained-disp', dest='pretrained_disp', default=None, metavar='PATH', help='path to pre-trained dispnet model')
 parser.add_argument('--pretrained-pose', dest='pretrained_pose', default=None, metavar='PATH', help='path to pre-trained Pose net model')
 parser.add_argument('--name', dest='name', type=str, required=True, help='name of the experiment, checkpoints are stored in checpoints/name')
@@ -114,57 +115,57 @@ def main():
     
     print("=> fetching scenes in '{}'".format(args.data))
     
-    """
-    dataset = SCAREDDataset
-    fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
-    fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
-    #print(args.data)
-    train_filenames = readlines(fpath_train)
-    val_filenames = readlines(fpath_val)
-    train_set = dataset(
-            args.data, train_filenames, 256, 320,
-            [0,1],4, is_train=True, img_ext=".jpg")  
-    val_set = dataset(
-            args.data, val_filenames, 256, 320,
-            [0,1], 4, is_train=False, img_ext=".jpg")
-    """
-    
-    if args.folder_type == 'sequence':
-        train_set = SequenceFolder(
-            args.data,
-            transform=train_transform,
-            seed=args.seed,
-            train=True,
-            sequence_length=args.sequence_length,
-            dataset=args.dataset
-        )
-    else:
-        #print("PairFolder")
-        train_set = PairFolder(
-            args.data,
-            seed=args.seed,
-            train=True,
-            transform=train_transform
-        )
-    
 
-    # if no Groundtruth is avalaible, Validation set is the same type as training set to measure photometric loss from warping
-    if args.with_gt:
-        from datasets.validation_folders import ValidationSet
-        val_set = ValidationSet(
-            args.data,
-            transform=valid_transform,
-            dataset=args.dataset
-        )
+    if args.dataset == 'scared':
+        dataset = SCAREDDataset
+        fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
+        fpath_val = os.path.join(os.path.dirname(__file__), "val.txt")
+        #print(args.data)
+        train_filenames = readlines(fpath_train)
+        val_filenames = readlines(fpath_val)
+        train_set = dataset(
+                args.data, train_filenames, 256, 320,
+                [0,1],4, is_train=True, img_ext=".jpg")  
+        val_set = dataset(
+                args.data, val_filenames, 256, 320,
+                [0,1], 4, is_train=False, img_ext=".jpg")
     else:
-        val_set = SequenceFolder(
-            args.data,
-            transform=valid_transform,
-            seed=args.seed,
-            train=False,
-            sequence_length=args.sequence_length,
-            dataset=args.dataset
-        )
+        if args.folder_type == 'sequence':
+            train_set = SequenceFolder(
+                args.data,
+                transform=train_transform,
+                seed=args.seed,
+                train=True,
+                sequence_length=args.sequence_length,
+                dataset=args.dataset
+            )
+        else:
+            #print("PairFolder")
+            train_set = PairFolder(
+                args.data,
+                seed=args.seed,
+                train=True,
+                transform=train_transform
+            )
+        
+
+        # if no Groundtruth is avalaible, Validation set is the same type as training set to measure photometric loss from warping
+        if args.with_gt:
+            from datasets.validation_folders import ValidationSet
+            val_set = ValidationSet(
+                args.data,
+                transform=valid_transform,
+                dataset=args.dataset
+            )
+        else:
+            val_set = SequenceFolder(
+                args.data,
+                transform=valid_transform,
+                seed=args.seed,
+                train=False,
+                sequence_length=args.sequence_length,
+                dataset=args.dataset
+            )
     
     print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
     print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))

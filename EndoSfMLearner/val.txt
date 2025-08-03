@@ -1,4 +1,4 @@
-dataset9/keyframe1/data
-dataset9/keyframe2/data
-dataset9/keyframe3/data
-dataset9/keyframe4/data
+dataset9/keyframe1
+dataset9/keyframe2
+dataset9/keyframe3
+dataset9/keyframe4
