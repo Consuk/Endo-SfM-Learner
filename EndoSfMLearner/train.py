@@ -123,12 +123,15 @@ def main():
         #print(args.data)
         train_filenames = readlines(fpath_train)
         val_filenames = readlines(fpath_val)
+        
         train_set = dataset(
-                args.data, train_filenames, 256, 320,
-                [0,1],4, is_train=True, img_ext=".jpg")  
+            args.data, train_filenames, 256, 320,
+            [0,1], 4, is_train=True, img_ext=".jpg")
+
         val_set = dataset(
                 args.data, val_filenames, 256, 320,
                 [0,1], 4, is_train=False, img_ext=".jpg")
+
     else:
         if args.folder_type == 'sequence':
             train_set = SequenceFolder(
@@ -175,11 +178,13 @@ def main():
 
     
     train_loader = torch.utils.data.DataLoader(
-        train_set, batch_size=args.batch_size, shuffle=False,
+        train_set, batch_size=args.batch_size, shuffle=True,   # ← True
         num_workers=args.workers, pin_memory=True)
+
     val_loader = torch.utils.data.DataLoader(
         val_set, batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
+
 
     """
     train_loader = DataLoader(
