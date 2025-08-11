@@ -126,11 +126,11 @@ def main():
         
         train_set = dataset(
             args.data, train_filenames, 256, 320,
-            [0,1], 4, is_train=True, img_ext=".jpg")
+            [-1,0,1], 4, is_train=True, img_ext=".jpg")
 
         val_set = dataset(
                 args.data, val_filenames, 256, 320,
-                [0,1], 4, is_train=False, img_ext=".jpg")
+                [-1,0,1], 4, is_train=False, img_ext=".jpg")
 
     else:
         if args.folder_type == 'sequence':
@@ -300,6 +300,10 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
     logger.train_bar.update(0)
 
     for i, (tgt_img, ref_imgs, intrinsics, intrinsics_inv) in enumerate(train_loader):
+        if i == 0:
+            print("K[0]:", intrinsics[0,0,:3,:3].mean().item(),
+                "cx:", intrinsics[0,0,0,2].item(), "cy:", intrinsics[0,0,1,2].item())
+
         log_losses = i > 0 and n_iter % args.print_freq == 0
 
         #print(len(tgt_img),len(ref_imgs),len(intrinsics))

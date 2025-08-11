@@ -31,8 +31,9 @@ class SCAREDDataset(MonoDataset):
 
             # Crear una entrada por frame (evitamos el último si usamos [0,1])
             for idx in frame_indices:
-                if idx + 1 in frame_indices:
+                if (idx - 1) in frame_indices and (idx + 1) in frame_indices:
                     expanded_filenames.append(f"{folder} {idx} l")
+
 
         self.filenames = expanded_filenames
 
