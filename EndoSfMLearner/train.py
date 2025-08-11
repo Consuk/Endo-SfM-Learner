@@ -300,9 +300,16 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
     logger.train_bar.update(0)
 
     for i, (tgt_img, ref_imgs, intrinsics, intrinsics_inv) in enumerate(train_loader):
+        # --- dentro de train(), justo antes del log_losses ---
         if i == 0:
-            print("K[0]:", intrinsics[0,0,:3,:3].mean().item(),
-                "cx:", intrinsics[0,0,0,2].item(), "cy:", intrinsics[0,0,1,2].item())
+            print("intrinsics shape:", tuple(intrinsics.shape))
+            # si viene [B,3,3] tomamos K = intrinsics[0]
+            # si viniera [B,1,3,3] tomamos K = intrinsics[0,0]
+            K = intrinsics[0] if intrinsics.dim() == 3 else intrinsics[0, 0]
+            K = K[:3, :3]  # por si está en 4x4
+            fx, fy, cx, cy = K[0,0].item(), K[1,1].item(), K[0,2].item(), K[1,2].item()
+            print(f"fx={fx:.3f} fy={fy:.3f} cx={cx:.3f} cy={cy:.3f}")
+
 
         log_losses = i > 0 and n_iter % args.print_freq == 0
 
